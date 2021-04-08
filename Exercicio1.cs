@@ -16,7 +16,6 @@ namespace projecteuler
             var numeros = new List<long>();
             for (int i = 1; i < 1000; i++)
             {
-                //System.Console.WriteLine("Numero: " + i + " divisor3: " + i % 3);
                 if (i % 3 == 0 || i % 5 == 0)
                     numeros.Add(i);
             }
