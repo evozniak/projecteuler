@@ -9,7 +9,6 @@ namespace projecteuler
     /// </summary>
     public class Exercicio1 : IComando
     {
-
         public void Executar()
         {
             System.Console.WriteLine("Soma de valores múltiplos de 3 e 5 até 1000");
@@ -24,6 +23,5 @@ namespace projecteuler
             var soma = numeros.Sum();
             System.Console.WriteLine(soma);
         }
-
     }
 }
