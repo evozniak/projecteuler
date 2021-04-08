@@ -16,7 +16,9 @@ namespace projecteuler
             var numeros = new List<long>();
             for (int i = 1; i < 1000; i++)
             {
-                if (i % 3 == 0 || i % 5 == 0)
+                var ehMultipoDeTres = i % 3 == 0;
+                var ehMultipoDeCinco = i % 5 == 0;
+                if (ehMultipoDeTres || ehMultipoDeCinco)
                     numeros.Add(i);
             }
             var soma = numeros.Sum();
