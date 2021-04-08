@@ -5,17 +5,15 @@ using System.Linq;
 
 namespace projecteuler
 {
-    class Program : Exercicio1
+    class Program
     {
         static void Main(string[] args)
         {
             var executor = new Executor();
             executor.ExecutarTodos();
-            //IComando ex1 = new Exercicio1();
-            //ex1.Executar();
 
-           //LargeSum();
-           //Multiples();
+            //executor.ObterResposta(typeof(Exercicio1));
+            //Console.WriteLine(executor.ObterTodasRespostas());
         }
     }
 }

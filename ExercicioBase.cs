@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace projecteuler
 {
-    interface IComando
+    public class ExercicioBase
     {
-        public string Resolver();
+        public ILog Log { get; init; }
+
+        public ExercicioBase(ILog log)
+        {
+            Log = log;
+        }
     }
 }
