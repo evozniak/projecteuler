@@ -13,10 +13,10 @@ namespace projecteuler
     ///1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...
     ///By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.
     /// </summary>
-    public class Exercicio2 : ICommand
+    public class Exercise2 : ICommand
     {
         private readonly ILogger _logger;
-        public Exercicio2(ILogger logger)
+        public Exercise2(ILogger logger)
         {
             this._logger = logger;
         }

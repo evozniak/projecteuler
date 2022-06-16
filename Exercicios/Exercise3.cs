@@ -11,11 +11,11 @@ namespace projecteuler
     /// The prime factors of 13195 are 5, 7, 13 and 29.
     ///What is the largest prime factor of the number 600851475143 ?
     /// </summary>
-    public class Exercicio3 : ICommand
+    public class Exercise3 : ICommand
     {
         //TODO - Finalizar exercício.
         private readonly ILogger _logger;
-        public Exercicio3(ILogger logger)
+        public Exercise3(ILogger logger)
         {
             this._logger = logger;
         }

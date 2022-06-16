@@ -11,10 +11,10 @@ namespace projecteuler
     /// <summary>
     /// Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
     /// </summary>
-    public class Exercicio13 : ICommand
+    public class Exercise13 : ICommand
     {
         private readonly ILogger _logger;
-        public Exercicio13(ILogger logger)
+        public Exercise13(ILogger logger)
         {
             this._logger = logger;
         }
