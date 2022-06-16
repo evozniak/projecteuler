@@ -26,7 +26,7 @@ namespace projecteuler
             var primeNumbers = GeneratePrimeNumbers(10000);
             foreach (var item in primeNumbers)
             {
-                Console.WriteLine(item);
+                _logger.Information(item.ToString());
             }
             return "";
         }

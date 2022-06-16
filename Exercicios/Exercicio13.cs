@@ -34,8 +34,7 @@ namespace projecteuler
                 sum += number;
             }
             var firstTenNumbers = sum.ToString().Substring(0, 10);
-            Log.Information("The first ten number of the sum are: ");
-            Log.Information(firstTenNumbers);
+            _logger.Information("The first ten number of the sum are: ", firstTenNumbers);
             return firstTenNumbers;
         }
 

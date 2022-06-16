@@ -43,13 +43,13 @@ namespace projecteuler
             if (args.Length == 0)
             {
                 System.Console.Clear();
-                Log.Information("Welcome to project Euler");
-                Log.Information("Please choose wich test you want to execute");
-                Log.Information("");
+                _logger.Information("Welcome to project Euler");
+                _logger.Information("Please choose wich test you want to execute");
+                _logger.Information("");
                 var exercises = FindExerciseClasses();
                 foreach (var exercise in exercises)
                 {
-                    Log.Information(exercise.Name);
+                    _logger.Information(exercise.Name);
                 }
                 return;
             }
@@ -66,12 +66,12 @@ namespace projecteuler
 
         public void RunExercise(string exerciseName)
         {
-            Log.Information("Running: " + exerciseName);
+            _logger.Information("Running: " + exerciseName);
             var projectNamespace = typeof(Executor).Namespace;
             var className = projectNamespace + '.' + exerciseName;
             var exercise = Exercises.Where(e => e.ToString() == className).FirstOrDefault();
             var result = exercise.Resolve();
-            Log.Information(exerciseName + ": " + result);
+            _logger.Information(exerciseName + ": " + result);
         }
 
         public void RunAll()
@@ -79,14 +79,14 @@ namespace projecteuler
             Responses.Clear();
             if (!Exercises.Any())
             {
-                Log.Information("There exercises found.");
+                _logger.Information("There exercises found.");
             }
             foreach (var exercise in Exercises)
             {
-                Log.Information("Running: " + exercise.GetType().Name);
+                _logger.Information("Running: " + exercise.GetType().Name);
                 var response = exercise.Resolve();
                 Responses.Add(exercise.GetType(), response);
-                Log.Information("....");
+                _logger.Information("....");
             }
         }
     }

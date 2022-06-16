@@ -18,7 +18,7 @@ namespace projecteuler
 
         public string Resolve()
         {
-            Log.Information("Sums values multiple of 3 and 5 until 1000");
+            _logger.Information("Sums values multiple of 3 and 5 until 1000");
             var numbers = new List<long>();
             for (int i = 1; i < 1000; i++)
             {
