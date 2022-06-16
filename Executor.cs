@@ -60,8 +60,18 @@ namespace projecteuler
             }
             foreach (var arg in args)
             {
-                System.Console.WriteLine("Running: " + arg);
+                RunExercise(arg);
             }
+        }
+
+        public void RunExercise(string exersiceName)
+        {
+            System.Console.WriteLine("Running: " + exersiceName);
+            var projectNamespace = typeof(Executor).Namespace;
+            var className = projectNamespace + '.' + exersiceName;
+            var exercise = Exercises.Where(e => e.ToString() == className).FirstOrDefault();
+            var result = exercise.Resolve();
+            System.Console.WriteLine(exersiceName + ": " + result);
         }
 
         public void RunAll()
@@ -79,26 +89,5 @@ namespace projecteuler
                 Console.WriteLine("....");
             }
         }
-
-        //public string ObterResposta(Type comando)
-        //{
-        //    var tipo = typeof(IComando);
-        //    if (comando.GetInterfaces().Contains(comando))
-        //    {
-        //        throw new ArgumentException("O tipo informado não implementa a interface " + tipo.FullName);
-        //    }
-        //    var saida = Respostas[comando];
-        //    return saida;
-        //}
-
-        //public string ObterTodasRespostas()
-        //{
-        //    var saida = "Respostas..." + Environment.NewLine;
-        //    foreach (var resposta in Respostas)
-        //    {
-        //        saida += $"Exercicio: {resposta.Key} Valor: {resposta.Value}{Environment.NewLine}";
-        //    }
-        //    return saida;
-        //}
     }
 }
