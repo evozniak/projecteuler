@@ -23,8 +23,8 @@ namespace projecteuler
 
         public string Resolve()
         {
-            var numerosFibonnaci = GenerateFibonnaciList(4_000_000);
-            var sum = numerosFibonnaci
+            var fibonnaciNumbers = GenerateFibonnaciList(4_000_000);
+            var sum = fibonnaciNumbers
                 .Where(f => IsEven(f))
                 .Sum(f => f);
             Log.Information(sum.ToString());
