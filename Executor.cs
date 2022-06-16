@@ -4,54 +4,79 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace projecteuler
 {
     public class Executor
     {
-        private List<IComando> Exercicios { get; init; }
-        private Dictionary<Type, string> Respostas { get; init; }
-
-        ILog Log;
-
-        public Executor()
+        private readonly ILogger _logger;
+        private List<ICommand> Exercises { get; init; }
+        private Dictionary<Type, string> Responses { get; init; }
+        public Executor(ILogger logger)
         {
-            Exercicios = new List<IComando>();
-            Respostas = new Dictionary<Type,string>();
-            Log = LogFactory.CreateLog();
+            _logger = logger;
+            Exercises = new List<ICommand>();
+            Responses = new Dictionary<Type, string>();
 
-            IEnumerable<Type> classes = BuscarClassesImplementandoInterface();
+            IEnumerable<Type> exercises = FindExerciseClasses();
 
-            
-            foreach (var classe in classes)
+
+            foreach (var exercise in exercises)
             {
-                var objeto = Activator.CreateInstance(classe, Log);
-                IComando comando = objeto as IComando;
-                Exercicios.Add(comando);
+                var exerciseObject = Activator.CreateInstance(exercise, logger);
+                ICommand comando = exerciseObject as ICommand;
+                Exercises.Add(comando);
             }
         }
 
-        private static IEnumerable<Type> BuscarClassesImplementandoInterface()
+        private static IEnumerable<Type> FindExerciseClasses()
         {
-            var tipoComando = typeof(IComando);
+            var tipoComando = typeof(ICommand);
             return Assembly.GetExecutingAssembly()
                         .GetTypes()
-                        .Where(t => t.GetInterfaces().Contains(typeof(IComando)) && !t.IsInterface);
+                        .Where(t => t.GetInterfaces().Contains(typeof(ICommand)) && !t.IsInterface);
         }
 
-        public void ExecutarTodos()
+        public void MainLoop(string[] args)
         {
-            Respostas.Clear();
-            if (!Exercicios.Any())
+            if (args.Length == 0)
             {
-                Log.Informacao("Nenhum exercício implementando a interface para executar.");
+                System.Console.Clear();
+                System.Console.WriteLine("Welcome to project Euler");
+                System.Console.WriteLine("Please choose wich test you want to execute");
+                System.Console.WriteLine("");
+                var exercises = FindExerciseClasses();
+                foreach (var exercise in exercises)
+                {
+                    System.Console.WriteLine(exercise.Name);
+                }
+                return;
             }
-            foreach (var exercicio in Exercicios)
+            if (args[0].ToLower() == "all")
             {
-                Log.Informacao("Executando: " + exercicio.GetType().Name);
-                var resposta = exercicio.Resolver();
-                Respostas.Add(exercicio.GetType(), resposta);
-                Console.WriteLine();
+                RunAll();
+                return;
+            }
+            foreach (var arg in args)
+            {
+                System.Console.WriteLine("Running: " + arg);
+            }
+        }
+
+        public void RunAll()
+        {
+            Responses.Clear();
+            if (!Exercises.Any())
+            {
+                Log.Information("There exercises found.");
+            }
+            foreach (var exercise in Exercises)
+            {
+                Log.Information("Running: " + exercise.GetType().Name);
+                var response = exercise.Resolve();
+                Responses.Add(exercise.GetType(), response);
+                Console.WriteLine("....");
             }
         }
 

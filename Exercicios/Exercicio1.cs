@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Serilog;
 
 namespace projecteuler
 {
@@ -7,24 +8,28 @@ namespace projecteuler
     /// If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
     ///  Find the sum of all the multiples of 3 or 5 below 1000.
     /// </summary>
-    public class Exercicio1 : ExercicioBase, IComando
+    public class Exercicio1 : ICommand
     {
-        public Exercicio1(ILog log) : base(log){}
-
-        public string Resolver()
+        private readonly ILogger _logger;
+        public Exercicio1(ILogger logger)
         {
-            Log.Informacao("Soma de valores múltiplos de 3 e 5 até 1000");
-            var numeros = new List<long>();
+            this._logger = logger;
+        }
+
+        public string Resolve()
+        {
+            Log.Information("Sums values multiple of 3 and 5 until 1000");
+            var numbers = new List<long>();
             for (int i = 1; i < 1000; i++)
             {
-                var ehMultipoDeTres = i % 3 == 0;
-                var ehMultipoDeCinco = i % 5 == 0;
-                if (ehMultipoDeTres || ehMultipoDeCinco)
-                    numeros.Add(i);
+                var isMultipleOfThree = i % 3 == 0;
+                var isMultipleOfFive = i % 5 == 0;
+                if (isMultipleOfThree || isMultipleOfFive)
+                    numbers.Add(i);
             }
-            var soma = numeros.Sum();
-            Log.Informacao(soma.ToString());
-            return soma.ToString();
+            var sum = numbers.Sum();
+            Log.Information(sum.ToString());
+            return sum.ToString();
         }
     }
 }

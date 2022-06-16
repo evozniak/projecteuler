@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace projecteuler.Exercicios
 {
@@ -10,40 +11,44 @@ namespace projecteuler.Exercicios
     /// The prime factors of 13195 are 5, 7, 13 and 29.
     ///What is the largest prime factor of the number 600851475143 ?
     /// </summary>
-    public class Exercicio3 : ExercicioBase, IComando
+    public class Exercicio3 : ICommand
     {
         //TODO - Finalizar exercício.
-        public Exercicio3(ILog log) : base(log) { }
-
-        public string Resolver()
+        private readonly ILogger _logger;
+        public Exercicio3(ILogger logger)
         {
-            int meta = Convert.ToInt32(600_851_475_143 / 4000);
-            var numerosPrimos = GerarNumerosPrimos(10000);
-            foreach (var item in numerosPrimos)
+            this._logger = logger;
+        }
+
+        public string Resolve()
+        {
+            int goal = Convert.ToInt32(600_851_475_143 / 4000);
+            var primeNumbers = GeneratePrimeNumbers(10000);
+            foreach (var item in primeNumbers)
             {
                 Console.WriteLine(item);
             }
             return "";
         }
 
-        private List<int> GerarNumerosPrimos(int numeroMaximo)
+        private List<int> GeneratePrimeNumbers(int numeroMaximo)
         {
-            var saida = new List<int>();
+            var output = new List<int>();
 
-            for (int numero = 2; numero < numeroMaximo; numero++)
+            for (int number = 2; number < numeroMaximo; number++)
             {
-                if (EhUmNumeroPrimo(numero))
-                    saida.Add(numero);
+                if (IsPrimeNumber(number))
+                    output.Add(number);
             }
-            return saida;
+            return output;
         }
 
-        private static bool EhUmNumeroPrimo(int numero)
+        private static bool IsPrimeNumber(int number)
         {
-            var metadeMaximo = numero / 2;
-            for (int fator1 = 2; fator1 <= metadeMaximo; fator1++)
+            var halfMaximum = number / 2;
+            for (int factor1 = 2; factor1 <= halfMaximum; factor1++)
             {
-                if (numero % fator1 == 0)
+                if (number % factor1 == 0)
                     return false;
             }
             return true;

@@ -4,38 +4,43 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace projecteuler
 {
     /// <summary>
     /// Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
     /// </summary>
-    public class Exercicio13 : ExercicioBase, IComando
+    public class Exercicio13 : ICommand
     {
-        public Exercicio13(ILog log) : base(log){}
-
-        public string Resolver()
+        private readonly ILogger _logger;
+        public Exercicio13(ILogger logger)
         {
-            var numeros = new List<BigInteger>();
+            this._logger = logger;
+        }
 
-            foreach (var linha in entrada.Split(Environment.NewLine))
+        public string Resolve()
+        {
+            var numbers = new List<BigInteger>();
+
+            foreach (var line in input.Split(Environment.NewLine))
             {
-                numeros.Add(BigInteger.Parse(linha));
+                numbers.Add(BigInteger.Parse(line));
             }
 
-            BigInteger soma = 0;
-            foreach (var numero in numeros)
+            BigInteger sum = 0;
+            foreach (var number in numbers)
             {
-                soma += numero;
+                sum += number;
             }
-            var dezPrimeiros = soma.ToString().Substring(0, 10);
-            Log.Informacao("Os primeiros 10 dígitos da soma são: ");
-            Log.Informacao(dezPrimeiros);
-            return dezPrimeiros;
+            var firstTenNumbers = sum.ToString().Substring(0, 10);
+            Log.Information("The first ten number of the sum are: ");
+            Log.Information(firstTenNumbers);
+            return firstTenNumbers;
         }
 
         //constant interpolation ainda está em beta no .net 5 C#9
-        public readonly string entrada = $@"37107287533902102798797998220837590246510135740250
+        public readonly string input = $@"37107287533902102798797998220837590246510135740250
 46376937677490009712648124896970078050417018260538
 74324986199524741059474233309513058123726617309629
 91942213363574161572522430563301811072406154908250

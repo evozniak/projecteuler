@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace projecteuler.Exercicios
 {
@@ -12,42 +13,46 @@ namespace projecteuler.Exercicios
     ///1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...
     ///By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.
     /// </summary>
-    public class Exercicio2 : ExercicioBase, IComando
+    public class Exercicio2 : ICommand
     {
-        public Exercicio2(ILog log) : base(log) { }
-
-        public string Resolver()
+        private readonly ILogger _logger;
+        public Exercicio2(ILogger logger)
         {
-            var numerosFibonnaci = GerarListaFibonnaci(4_000_000);
-            var soma = numerosFibonnaci
-                .Where(f => EhPar(f))
+            this._logger = logger;
+        }
+
+        public string Resolve()
+        {
+            var numerosFibonnaci = GenerateFibonnaciList(4_000_000);
+            var sum = numerosFibonnaci
+                .Where(f => IsEven(f))
                 .Sum(f => f);
-            Log.Informacao(soma.ToString());
-            return soma.ToString();
+            Log.Information(sum.ToString());
+            return sum.ToString();
         }
         /// <summary>
-        /// Gera fibonacci usando uma pilha e não recursividade, indicado para valores expressivos.
+        /// Generates fibonacci using a stack and not recursivity, prefered approach for big values.
         /// </summary>
-        /// <param name="numeroMaximo">Número máximo do fibonacci.</param>
-        /// <returns>Listagem com todos os números de fibonacci.</returns>
-        private static List<int> GerarListaFibonnaci(int numeroMaximo)
+        /// <param name="maximumNumber">Maximum number of the fibonacci.</param>
+        /// <returns>List with all fibonacci numbers.</returns>
+        private static List<int> GenerateFibonnaciList(int maximumNumber)
         {
-            var pilha = new Stack<int>();
-            pilha.Push(1);
-            pilha.Push(2);
-            while (pilha.Peek() < numeroMaximo)
+            var stack = new Stack<int>();
+            stack.Push(1);
+            stack.Push(2);
+            while (stack.Peek() < maximumNumber)
             {
-                var ultimoValor = pilha.Peek();
-                var penultimoValor = pilha.Skip(1).First();
-                pilha.Push(penultimoValor + ultimoValor);
+                var lastValue = stack.Peek();
+                var secondToLastValue = stack.Skip(1).First();
+                stack.Push(secondToLastValue + lastValue);
             }
 
-            return pilha.ToList();
+            return stack.ToList();
         }
 
-        private static bool EhPar(int numero)
+        private static bool IsEven(int number)
         {
-            return numero % 2 == 0;
+            return number % 2 == 0;
         }
 
 
