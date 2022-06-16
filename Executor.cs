@@ -86,7 +86,7 @@ namespace projecteuler
                 Log.Information("Running: " + exercise.GetType().Name);
                 var response = exercise.Resolve();
                 Responses.Add(exercise.GetType(), response);
-                Console.WriteLine("....");
+                Log.Information("....");
             }
         }
     }
