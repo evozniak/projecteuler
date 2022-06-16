@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Serilog;
 
-namespace projecteuler.Exercicios
+namespace projecteuler
 {
     /// <summary>
     /// The prime factors of 13195 are 5, 7, 13 and 29.

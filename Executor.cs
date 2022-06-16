@@ -43,13 +43,13 @@ namespace projecteuler
             if (args.Length == 0)
             {
                 System.Console.Clear();
-                System.Console.WriteLine("Welcome to project Euler");
-                System.Console.WriteLine("Please choose wich test you want to execute");
-                System.Console.WriteLine("");
+                Log.Information("Welcome to project Euler");
+                Log.Information("Please choose wich test you want to execute");
+                Log.Information("");
                 var exercises = FindExerciseClasses();
                 foreach (var exercise in exercises)
                 {
-                    System.Console.WriteLine(exercise.Name);
+                    Log.Information(exercise.Name);
                 }
                 return;
             }
@@ -64,14 +64,14 @@ namespace projecteuler
             }
         }
 
-        public void RunExercise(string exersiceName)
+        public void RunExercise(string exerciseName)
         {
-            System.Console.WriteLine("Running: " + exersiceName);
+            Log.Information("Running: " + exerciseName);
             var projectNamespace = typeof(Executor).Namespace;
-            var className = projectNamespace + '.' + exersiceName;
+            var className = projectNamespace + '.' + exerciseName;
             var exercise = Exercises.Where(e => e.ToString() == className).FirstOrDefault();
             var result = exercise.Resolve();
-            System.Console.WriteLine(exersiceName + ": " + result);
+            Log.Information(exerciseName + ": " + result);
         }
 
         public void RunAll()
