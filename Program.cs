@@ -19,9 +19,6 @@ namespace projecteuler
 
             var executor = serviceProvider.GetService<Executor>();
             executor.MainLoop(args);
-
-            //executor.ObterResposta(typeof(Exercicio1));
-            //Console.WriteLine(executor.ObterTodasRespostas());
         }
 
         private static void ConfigureServices(IServiceCollection services)
