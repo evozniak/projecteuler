@@ -13,8 +13,8 @@ namespace projecteuler
     /// </summary>
     public class Exercise3 : ICommand
     {
-        //TODO - Finalizar exercício.
         private readonly ILogger _logger;
+
         public Exercise3(ILogger logger)
         {
             this._logger = logger;
@@ -22,37 +22,30 @@ namespace projecteuler
 
         public string Resolve()
         {
-            int goal = Convert.ToInt32(600_851_475_143 / 4000);
-            var primeNumbers = GeneratePrimeNumbers(10000);
-            foreach (var item in primeNumbers)
-            {
-                _logger.Information(item.ToString());
-            }
-            return "";
+            var result = CalculatePrimeFactor(600_851_475_143);
+            return result.ToString();
         }
 
-        private List<int> GeneratePrimeNumbers(int numeroMaximo)
+        private int CalculatePrimeFactor(long number)
         {
-            var output = new List<int>();
-
-            for (int number = 2; number < numeroMaximo; number++)
+            int currentDivider = 2;
+            decimal currentNumber = number;            
+            List<int> primeNumbers = new List<int>();
+            while(currentNumber != 1)
             {
-                if (IsPrimeNumber(number))
-                    output.Add(number);
+                decimal reminder = currentNumber / currentDivider;
+                bool isInteger = reminder % 1 == 0;
+                if (isInteger)
+                {
+                    primeNumbers.Add(currentDivider);
+                    currentNumber = reminder;
+                }
+                else
+                {
+                    currentDivider++;
+                }
             }
-            return output;
-        }
-
-        private static bool IsPrimeNumber(int number)
-        {
-            var halfMaximum = number / 2;
-            for (int factor1 = 2; factor1 <= halfMaximum; factor1++)
-            {
-                if (number % factor1 == 0)
-                    return false;
-            }
-            return true;
-
+            return primeNumbers.LastOrDefault();
         }
     }
 }
