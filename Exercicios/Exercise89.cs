@@ -34,10 +34,41 @@ namespace projecteuler
             return "";
         }
 
+        private int RomanCharacterToInt(char romanCharacter)
+        {
+            return romanCharacter switch
+            {
+                'I' => 1,
+                'V' => 5,
+                'X' => 10,
+                'L' => 50,
+                'C' => 100,
+                'D' => 500,
+                'M' => 1000,
+                _ => throw new ArgumentException("Invalid Roman value.")
+            };
+        }
+
         private int RomanToInt(string romanNumber)
         {
-            
-            return 0;
+            int result = 0;
+            var characters = romanNumber.ToArray();
+            for (int i = 0; i < characters.Length; i++)
+            {
+                int actualValue = 0;
+                int valueOfNext = 0;
+                do
+                {
+                    actualValue = RomanCharacterToInt(characters[i]);
+                    valueOfNext = RomanCharacterToInt(characters[i + 1]);
+                    if (actualValue > valueOfNext)
+                    {
+                        actualValue -= valueOfNext;
+                    }
+
+                } while (actualValue > valueOfNext);
+            }
+            return result;
         }
     }
 }
